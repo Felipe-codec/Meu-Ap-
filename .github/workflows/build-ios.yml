@@ -33,7 +33,13 @@ jobs:
 
       - name: Build iOS App (.app & .ipa)
         run: |
-          xcodebuild -workspace ios/App/App.xcworkspace \
+          if [ -d "ios/App/App.xcworkspace" ]; then
+            TARGET_FLAG="-workspace ios/App/App.xcworkspace"
+          else
+            TARGET_FLAG="-project ios/App/App.xcodeproj"
+          fi
+
+          xcodebuild $TARGET_FLAG \
             -scheme App \
             -configuration Release \
             -sdk iphoneos \
