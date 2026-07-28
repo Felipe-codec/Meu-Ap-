@@ -1,0 +1,23 @@
+node_modules
+dist
+.DS_Store
+
+# Android
+android/app/build
+android/.gradle
+android/captures
+android/local.properties
+*.apk
+*.aab
+
+# iOS
+ios/App/build
+ios/App/Pods
+ios/App/App.xcworkspace/xcuserdata
+ios/App/App.xcodeproj/xcuserdata
+
+# Environment variables & IDE
+.env
+.env.local
+.vscode
+.idea
