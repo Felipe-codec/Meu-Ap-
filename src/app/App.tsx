@@ -9,7 +9,9 @@ import { GroceryTab } from "./components/GroceryTab";
 import { BottomNav } from "./components/BottomNav";
 import { useStorage } from "./components/useStorage";
 import type { UserProfile } from "./components/types";
-import { UserCheck } from "lucide-react";
+import { UserCheck, FileSpreadsheet } from "lucide-react";
+import { isWebPlatform } from "./services/googleSheetsService";
+import { GoogleSheetsModal } from "./components/GoogleSheetsModal";
 
 const TAB_TITLES = [
   "Meu Apê",
@@ -25,6 +27,7 @@ const defaultProfile: UserProfile = { name: "", apartmentNumber: "", totalFinanc
 export default function App() {
   const [userId, setUserId] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState(0);
+  const [isSheetsModalOpen, setIsSheetsModalOpen] = useState(false);
   const [profile] = useStorage<UserProfile>(userId ? `apt_profile_${userId}` : "apt_profile_none", defaultProfile);
 
   if (!userId) {
@@ -57,15 +60,29 @@ export default function App() {
             </h2>
           </div>
 
-          <button
-            onClick={handleLogout}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border shadow-xs transition-all active:scale-95"
-            style={{ background: "#F5F0EB", borderColor: "#E8DDD4", color: "#4A3728" }}
-            title="Alternar perfil de usuária"
-          >
-            <UserCheck size={13} color="#8B6E52" />
-            <span className="max-w-[70px] truncate">{profile.name || "Perfil"}</span>
-          </button>
+          <div className="flex items-center gap-2">
+            {/* Google Sheets button for Web format */}
+            {isWebPlatform() && (
+              <button
+                onClick={() => setIsSheetsModalOpen(true)}
+                className="p-2 rounded-full border shadow-xs transition-all active:scale-95 flex items-center justify-center"
+                style={{ background: "#F5F0EB", borderColor: "#E8DDD4", color: "#34A853" }}
+                title="Configurar Google Sheets (Banco de Dados Web)"
+              >
+                <FileSpreadsheet size={16} />
+              </button>
+            )}
+
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border shadow-xs transition-all active:scale-95"
+              style={{ background: "#F5F0EB", borderColor: "#E8DDD4", color: "#4A3728" }}
+              title="Alternar perfil de usuária"
+            >
+              <UserCheck size={13} color="#8B6E52" />
+              <span className="max-w-[70px] truncate">{profile.name || "Perfil"}</span>
+            </button>
+          </div>
         </div>
 
         {/* Scrollable Tab Content */}
@@ -83,6 +100,9 @@ export default function App() {
         {/* Bottom Navigation */}
         <BottomNav activeTab={activeTab} onTabChange={setActiveTab} />
       </div>
+
+      {/* Google Sheets Config Modal */}
+      <GoogleSheetsModal isOpen={isSheetsModalOpen} onClose={() => setIsSheetsModalOpen(false)} />
     </div>
   );
 }

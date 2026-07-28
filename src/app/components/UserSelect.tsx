@@ -1,7 +1,9 @@
 import { useState } from "react";
-import { Home, KeyRound, Sparkles, UserCheck, Edit3, Lock } from "lucide-react";
+import { Home, KeyRound, Sparkles, UserCheck, Edit3, Lock, FileSpreadsheet } from "lucide-react";
 import { useStorage } from "./useStorage";
 import type { UserProfile } from "./types";
+import { isWebPlatform } from "../services/googleSheetsService";
+import { GoogleSheetsModal } from "./GoogleSheetsModal";
 
 interface Props {
   onSelect: (userId: string) => void;
@@ -13,6 +15,7 @@ export function UserSelect({ onSelect }: Props) {
   const [profile1, setProfile1] = useStorage<UserProfile>("apt_profile_user1", defaultProfile);
   const [profile2, setProfile2] = useStorage<UserProfile>("apt_profile_user2", defaultProfile);
   const [setupMode, setSetupMode] = useState<"user1" | "user2" | null>(null);
+  const [isSheetsModalOpen, setIsSheetsModalOpen] = useState(false);
   const [form, setForm] = useState({ name: "", apartmentNumber: "", totalFinancing: "" });
 
   const profiles = { user1: profile1, user2: profile2 };
@@ -117,8 +120,8 @@ export function UserSelect({ onSelect }: Props) {
         </div>
 
         <div className="rounded-3xl p-5 border shadow-sm mb-6" style={{ background: "#FBF8F5", borderColor: "#E8DDD4" }}>
-          <p className="text-xs font-semibold text-center mb-4 uppercase tracking-wider" style={{ color: "#8B6E52" }}>
-            Selecione quem vai usar
+          <p className="text-xs font-semibold text-center mb-4 uppercase tracking-wider flex items-center justify-center gap-1.5" style={{ color: "#8B6E52" }}>
+            <span>Selecione quem vai usar</span>
           </p>
 
           <div className="flex flex-col gap-3">
@@ -185,12 +188,34 @@ export function UserSelect({ onSelect }: Props) {
           </div>
         </div>
 
+        {/* Web Google Sheets Button Banner */}
+        {isWebPlatform() && (
+          <button
+            onClick={() => setIsSheetsModalOpen(true)}
+            className="w-full mb-4 p-3.5 rounded-2xl border flex items-center justify-between shadow-xs transition-all active:scale-[0.98]"
+            style={{ background: "#F0FDF4", borderColor: "#86EFAC" }}
+          >
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-xl flex items-center justify-center" style={{ background: "#34A853", color: "#FFF" }}>
+                <FileSpreadsheet size={18} />
+              </div>
+              <div className="text-left">
+                <p className="text-xs font-bold" style={{ color: "#166534" }}>Conectar Google Sheets</p>
+                <p className="text-[10px]" style={{ color: "#15803D" }}>Banco de dados nuvem para a versão Web</p>
+              </div>
+            </div>
+            <span className="text-xs font-bold px-2 py-1 rounded-lg" style={{ background: "#DCFCE7", color: "#166534" }}>Configurar</span>
+          </button>
+        )}
+
         <div className="rounded-2xl p-3 border text-center" style={{ background: "#FBF8F5", borderColor: "#E8DDD4" }}>
           <p className="text-[11px] font-medium leading-relaxed" style={{ color: "#8B6E52" }}>
             <span className="inline-flex items-center gap-1.5"><Lock size={12} color="#8B6E52" /> <strong>Privacidade Total:</strong></span> Cada perfil mantém dados privados e independentes salvos com segurança no dispositivo.
           </p>
         </div>
       </div>
+
+      <GoogleSheetsModal isOpen={isSheetsModalOpen} onClose={() => setIsSheetsModalOpen(false)} />
     </div>
   );
 }
