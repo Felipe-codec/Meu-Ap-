@@ -127,8 +127,6 @@
   body {
     @apply bg-background text-foreground;
     font-family: 'DM Sans', sans-serif;
-    max-width: 448px;
-    margin: 0 auto;
     min-height: 100dvh;
   }
 
