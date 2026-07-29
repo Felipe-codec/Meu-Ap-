@@ -299,7 +299,7 @@ export function MaterialsTab({ userId }: Props) {
       )}
 
       {/* Item List */}
-      <div className="flex flex-col gap-2.5">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
         {filtered.length === 0 && (
           <div className="text-center py-10 rounded-2xl border" style={{ background: "#FBF8F5", borderColor: "#E8DDD4" }}>
             <p className="text-xs font-medium" style={{ color: "#9B8578" }}>Nenhum item cadastrado nesta categoria.</p>

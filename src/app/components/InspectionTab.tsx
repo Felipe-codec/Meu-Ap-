@@ -241,7 +241,7 @@ export function InspectionTab({ userId }: Props) {
             <p className="text-xs font-bold uppercase tracking-wider px-1 pt-1 flex items-center gap-1.5" style={{ color: "#4A3728" }}>
               <Icon size={14} color="#8B6E52" /> {cat.label} ({catItems.length})
             </p>
-            <div className="flex flex-col gap-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
               {catItems.map(item => (
                 <div
                   key={item.id}
