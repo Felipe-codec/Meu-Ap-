@@ -24,8 +24,10 @@ jobs:
       - name: Install dependencies
         run: npm ci || npm install
 
-      - name: Build Web App
-        run: npm run build
+      - name: Build Web App (Mobile & Standalone Desktop)
+        run: |
+          npm run build
+          node -e "const { build } = require('vite'); build({ build: { outDir: 'dist', emptyOutDir: false, rollupOptions: { input: { desktop: 'desktop.html' } } } })"
 
       - name: Deploy to GitHub Pages Branch
         uses: peaceiris/actions-gh-pages@v4
