@@ -49,15 +49,15 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#EFE8DF] flex justify-center items-start md:py-6 md:px-4">
-      {/* Fully fluid & responsive container */}
+    <div className="min-h-screen bg-[#EFE8DF] flex flex-col justify-start items-center md:py-8 md:px-6">
+      {/* Outer Shell */}
       <div
-        className="w-full max-w-6xl min-h-screen md:min-h-[850px] md:rounded-[32px] flex flex-col relative overflow-hidden shadow-2xl md:border border-[#E8DDD4]"
+        className="w-full max-w-6xl min-h-screen md:min-h-0 md:rounded-[32px] flex flex-col relative overflow-hidden shadow-2xl md:border border-[#E8DDD4]"
         style={{ background: "#F5F0EB" }}
       >
-        {/* Header */}
+        {/* Top Header */}
         <div
-          className="sticky top-0 z-40 px-4 sm:px-6 md:px-8 pt-5 pb-4 flex flex-col lg:flex-row lg:items-center justify-between shadow-xs gap-3"
+          className="sticky top-0 z-40 px-4 sm:px-6 md:px-8 pt-5 pb-4 flex flex-col md:flex-row md:items-center justify-between shadow-xs gap-3"
           style={{ background: "#FBF8F5", borderBottom: "1px solid #E8DDD4" }}
         >
           <div className="flex items-center justify-between min-w-0">
@@ -70,8 +70,8 @@ export default function App() {
               </h2>
             </div>
 
-            {/* Mobile-only action buttons */}
-            <div className="flex items-center gap-2 lg:hidden shrink-0 ml-2">
+            {/* Mobile-only Action Buttons */}
+            <div className="flex items-center gap-2 md:hidden shrink-0 ml-2">
               {isWebPlatform() && (
                 <button
                   onClick={() => setIsSheetsModalOpen(true)}
@@ -93,8 +93,8 @@ export default function App() {
             </div>
           </div>
 
-          {/* Desktop & Tablet Scrollable Navigation Bar */}
-          <div className="hidden lg:flex items-center gap-1 bg-[#F5F0EB] p-1.5 rounded-2xl border border-[#E8DDD4] overflow-x-auto max-w-full no-scrollbar">
+          {/* Desktop Navigation Bar (>= 768px) */}
+          <div className="hidden md:flex items-center gap-1.5 bg-[#F5F0EB] p-1.5 rounded-2xl border border-[#E8DDD4] overflow-x-auto max-w-full no-scrollbar">
             {TABS.map(({ icon: Icon, label, index }) => {
               const active = activeTab === index;
               return (
@@ -114,8 +114,8 @@ export default function App() {
             })}
           </div>
 
-          {/* Desktop action buttons */}
-          <div className="hidden lg:flex items-center gap-2.5 shrink-0">
+          {/* Desktop Right Actions */}
+          <div className="hidden md:flex items-center gap-2.5 shrink-0">
             {isWebPlatform() && (
               <button
                 onClick={() => setIsSheetsModalOpen(true)}
@@ -139,8 +139,8 @@ export default function App() {
           </div>
         </div>
 
-        {/* Main Content Area */}
-        <div className="flex-1 overflow-y-auto px-4 sm:px-6 md:px-8 pt-5 pb-24 lg:pb-8 scrollbar-thin">
+        {/* Content Area */}
+        <div className="flex-1 overflow-y-auto px-4 sm:px-6 md:px-8 py-6">
           <div className="w-full max-w-5xl mx-auto">
             {activeTab === 0 && (
               <HomeTab userId={userId} onTabChange={setActiveTab} onLogout={handleLogout} />
@@ -153,8 +153,8 @@ export default function App() {
           </div>
         </div>
 
-        {/* Mobile / Tablet Bottom Navigation */}
-        <div className="lg:hidden">
+        {/* Mobile-only Bottom Navigation (< 768px) */}
+        <div className="md:hidden">
           <BottomNav activeTab={activeTab} onTabChange={setActiveTab} />
         </div>
       </div>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Home as HomeIcon, CreditCard, Users, Package, ClipboardCheck, ShoppingCart, LogOut, Building2, Smartphone, ChevronRight } from "lucide-react";
+import { CreditCard, Users, Package, ClipboardCheck, ShoppingCart, LogOut, Building2, Smartphone, ChevronRight } from "lucide-react";
 import { useStorage } from "./useStorage";
 import type { UserProfile, Installment } from "./types";
 import { ApkGuideModal } from "./ApkGuideModal";
@@ -34,15 +34,15 @@ export function HomeTab({ userId, onTabChange, onLogout }: Props) {
   const paidPercent = totalFinancing > 0 ? Math.min(100, (totalPaid / totalFinancing) * 100) : 0;
 
   return (
-    <div className="flex flex-col gap-6 pb-6">
-      {/* Top Section Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        {/* Header card with Apartment Badge */}
-        <div className="rounded-3xl p-5 sm:p-6 relative overflow-hidden shadow-md flex flex-col justify-between" style={{ background: "#4A3728" }}>
+    <div className="flex flex-col gap-6 pb-6 w-full">
+      {/* Top Grid Section */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5 w-full">
+        {/* Apartment Badge Card */}
+        <div className="rounded-3xl p-6 relative overflow-hidden shadow-md flex flex-col justify-between w-full" style={{ background: "#4A3728" }}>
           <div className="absolute top-0 right-0 w-44 h-44 rounded-full opacity-10" style={{ background: "#C4A882", transform: "translate(30%, -30%)" }} />
           <div className="absolute bottom-0 left-0 w-32 h-32 rounded-full opacity-10" style={{ background: "#C4A882", transform: "translate(-30%, 30%)" }} />
 
-          <div className="flex items-center justify-between mb-5 relative z-10">
+          <div className="flex items-center justify-between mb-5 relative z-10 min-w-0">
             <div className="flex items-center gap-3 min-w-0">
               <div className="w-12 h-12 rounded-2xl flex items-center justify-center shadow-sm shrink-0" style={{ background: "#C4A882" }}>
                 <Building2 size={24} color="#4A3728" />
@@ -66,31 +66,31 @@ export function HomeTab({ userId, onTabChange, onLogout }: Props) {
             </button>
           </div>
 
-          <div className="relative z-10">
+          <div className="relative z-10 w-full">
             <p className="text-xs mb-0.5" style={{ color: "#C4A882" }}>Apartamento Nº</p>
             <p className="text-2xl sm:text-3xl font-extrabold mb-4 tracking-tight truncate" style={{ color: "#FBF8F5" }}>
               {profile.apartmentNumber ? `Apto ${profile.apartmentNumber}` : "Não informado"}
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div className="rounded-2xl p-3.5 border backdrop-blur-sm min-w-0" style={{ background: "rgba(255,255,255,0.07)", borderColor: "rgba(255,255,255,0.1)" }}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full">
+              <div className="rounded-2xl p-3.5 border backdrop-blur-sm min-w-0 overflow-hidden" style={{ background: "rgba(255,255,255,0.07)", borderColor: "rgba(255,255,255,0.1)" }}>
                 <p className="text-[11px] mb-1" style={{ color: "#C4A882" }}>Total pago</p>
-                <p className="text-sm sm:text-base font-bold truncate" style={{ color: "#FBF8F5" }}>{fmt(totalPaid)}</p>
+                <p className="text-sm sm:text-base font-extrabold truncate w-full" style={{ color: "#FBF8F5" }}>{fmt(totalPaid)}</p>
               </div>
-              <div className="rounded-2xl p-3.5 border backdrop-blur-sm min-w-0" style={{ background: "rgba(255,255,255,0.07)", borderColor: "rgba(255,255,255,0.1)" }}>
+              <div className="rounded-2xl p-3.5 border backdrop-blur-sm min-w-0 overflow-hidden" style={{ background: "rgba(255,255,255,0.07)", borderColor: "rgba(255,255,255,0.1)" }}>
                 <p className="text-[11px] mb-1" style={{ color: "#C4A882" }}>Falta pagar</p>
-                <p className="text-sm sm:text-base font-bold truncate" style={{ color: "#FBF8F5" }}>{fmt(remaining)}</p>
+                <p className="text-sm sm:text-base font-extrabold truncate w-full" style={{ color: "#FBF8F5" }}>{fmt(remaining)}</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* Progress Card & APK Banner */}
-        <div className="flex flex-col gap-5 justify-between">
-          <div className="rounded-3xl p-5 sm:p-6 border shadow-sm flex-1 flex flex-col justify-between" style={{ background: "#FBF8F5", borderColor: "#E8DDD4" }}>
+        <div className="flex flex-col gap-5 justify-between w-full">
+          <div className="rounded-3xl p-6 border shadow-sm flex-1 flex flex-col justify-between w-full" style={{ background: "#FBF8F5", borderColor: "#E8DDD4" }}>
             <div>
-              <div className="flex items-center justify-between mb-3 gap-2">
-                <p className="text-sm sm:text-base font-bold truncate" style={{ color: "#4A3728" }}>Resumo do Financiamento</p>
+              <div className="flex items-center justify-between mb-3 gap-2 flex-wrap">
+                <p className="text-sm sm:text-base font-bold min-w-0" style={{ color: "#4A3728" }}>Resumo do Financiamento</p>
                 <span className="text-xs font-bold px-3 py-1 rounded-full shrink-0" style={{ background: "#F5F0EB", color: "#8B6E52" }}>
                   {paidPercent.toFixed(1)}% Quitado
                 </span>
@@ -103,14 +103,14 @@ export function HomeTab({ userId, onTabChange, onLogout }: Props) {
               </div>
             </div>
 
-            <div className="flex justify-between items-center text-xs pt-3 border-t border-[#E8DDD4] gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3 border-t border-[#E8DDD4] w-full text-xs">
               <div className="min-w-0">
                 <p className="text-[11px]" style={{ color: "#9B8578" }}>Valor total financiado</p>
                 <p className="font-extrabold text-sm sm:text-base truncate" style={{ color: "#4A3728" }}>{fmt(totalFinancing)}</p>
               </div>
-              <div className="text-right shrink-0">
+              <div className="min-w-0 sm:text-right">
                 <p className="text-[11px]" style={{ color: "#9B8578" }}>Parcelas quitadas</p>
-                <p className="font-extrabold text-sm sm:text-base" style={{ color: "#8B6E52" }}>
+                <p className="font-extrabold text-sm sm:text-base truncate" style={{ color: "#8B6E52" }}>
                   {installments.filter(i => i.paid).length} <span className="font-normal text-xs" style={{ color: "#9B8578" }}>de {installments.length}</span>
                 </p>
               </div>
@@ -137,17 +137,17 @@ export function HomeTab({ userId, onTabChange, onLogout }: Props) {
         </div>
       </div>
 
-      {/* Quick Access Icons Grid */}
-      <div className="pt-2">
+      {/* Main Menu Grid */}
+      <div className="pt-2 w-full">
         <p className="text-xs font-extrabold uppercase tracking-wider mb-4 px-1" style={{ color: "#8B6E52" }}>
           Menu Principal de Navegação
         </p>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 sm:gap-4 w-full">
           {tabInfo.map(({ icon: Icon, label, tab, color }) => (
             <button
               key={tab}
               onClick={() => onTabChange(tab)}
-              className="flex flex-col items-center justify-center gap-2.5 p-4 sm:p-5 rounded-2xl border shadow-sm transition-all hover:scale-[1.02] active:scale-95 min-w-0"
+              className="flex flex-col items-center justify-center gap-3 p-4 sm:p-5 rounded-2xl border shadow-sm transition-all hover:scale-[1.02] active:scale-95 min-w-0 w-full"
               style={{ background: "#FBF8F5", borderColor: "#E8DDD4" }}
             >
               <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl flex items-center justify-center shadow-xs shrink-0" style={{ background: "#F5F0EB" }}>
