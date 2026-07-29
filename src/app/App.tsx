@@ -49,29 +49,29 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#EFE8DF] flex justify-center items-center md:py-6 md:px-6">
-      {/* Desktop & Mobile responsive container */}
+    <div className="min-h-screen bg-[#EFE8DF] flex justify-center items-start md:py-6 md:px-4">
+      {/* Fully fluid & responsive container */}
       <div
-        className="w-full max-w-6xl min-h-screen md:min-h-[860px] md:rounded-[32px] flex flex-col relative overflow-hidden shadow-2xl md:border border-[#E8DDD4]"
+        className="w-full max-w-6xl min-h-screen md:min-h-[850px] md:rounded-[32px] flex flex-col relative overflow-hidden shadow-2xl md:border border-[#E8DDD4]"
         style={{ background: "#F5F0EB" }}
       >
-        {/* Top Header */}
+        {/* Header */}
         <div
-          className="sticky top-0 z-40 px-5 md:px-8 pt-6 pb-4 flex flex-col md:flex-row md:items-center justify-between shadow-xs gap-4"
+          className="sticky top-0 z-40 px-4 sm:px-6 md:px-8 pt-5 pb-4 flex flex-col lg:flex-row lg:items-center justify-between shadow-xs gap-3"
           style={{ background: "#FBF8F5", borderBottom: "1px solid #E8DDD4" }}
         >
-          <div className="flex items-center justify-between">
-            <div>
+          <div className="flex items-center justify-between min-w-0">
+            <div className="min-w-0">
               <span className="text-[10px] font-bold uppercase tracking-wider block" style={{ color: "#8B6E52" }}>
                 {activeTab === 0 ? "Painel de Controle" : "Aba Ativa"}
               </span>
-              <h2 className="text-lg md:text-xl font-extrabold tracking-tight leading-tight" style={{ color: "#4A3728" }}>
+              <h2 className="text-base sm:text-lg md:text-xl font-extrabold tracking-tight truncate" style={{ color: "#4A3728" }}>
                 {TAB_TITLES[activeTab]}
               </h2>
             </div>
 
             {/* Mobile-only action buttons */}
-            <div className="flex items-center gap-2 md:hidden">
+            <div className="flex items-center gap-2 lg:hidden shrink-0 ml-2">
               {isWebPlatform() && (
                 <button
                   onClick={() => setIsSheetsModalOpen(true)}
@@ -88,40 +88,40 @@ export default function App() {
                 style={{ background: "#F5F0EB", borderColor: "#E8DDD4", color: "#4A3728" }}
               >
                 <UserCheck size={13} color="#8B6E52" />
-                <span className="max-w-[70px] truncate">{profile.name || "Perfil"}</span>
+                <span className="max-w-[80px] truncate">{profile.name || "Perfil"}</span>
               </button>
             </div>
           </div>
 
-          {/* Desktop Navigation Tabs Header */}
-          <div className="hidden md:flex items-center gap-1 bg-[#F5F0EB] p-1.5 rounded-2xl border border-[#E8DDD4]">
+          {/* Desktop & Tablet Scrollable Navigation Bar */}
+          <div className="hidden lg:flex items-center gap-1 bg-[#F5F0EB] p-1.5 rounded-2xl border border-[#E8DDD4] overflow-x-auto max-w-full no-scrollbar">
             {TABS.map(({ icon: Icon, label, index }) => {
               const active = activeTab === index;
               return (
                 <button
                   key={index}
                   onClick={() => setActiveTab(index)}
-                  className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold transition-all active:scale-95"
+                  className="flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold transition-all shrink-0 active:scale-95"
                   style={{
                     background: active ? "#8B6E52" : "transparent",
                     color: active ? "#FBF8F5" : "#6B584C",
                   }}
                 >
                   <Icon size={16} color={active ? "#FBF8F5" : "#8B6E52"} />
-                  <span>{label}</span>
+                  <span className="whitespace-nowrap">{label}</span>
                 </button>
               );
             })}
           </div>
 
           {/* Desktop action buttons */}
-          <div className="hidden md:flex items-center gap-2.5">
+          <div className="hidden lg:flex items-center gap-2.5 shrink-0">
             {isWebPlatform() && (
               <button
                 onClick={() => setIsSheetsModalOpen(true)}
                 className="flex items-center gap-2 px-3.5 py-2 rounded-full border text-xs font-bold shadow-xs transition-all active:scale-95"
                 style={{ background: "#F0FDF4", borderColor: "#86EFAC", color: "#166534" }}
-                title="Configurar Google Sheets (Banco de Dados Web)"
+                title="Configurar Google Sheets"
               >
                 <FileSpreadsheet size={16} color="#34A853" />
                 <span>Google Sheets</span>
@@ -132,16 +132,15 @@ export default function App() {
               onClick={handleLogout}
               className="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold border shadow-xs transition-all active:scale-95"
               style={{ background: "#F5F0EB", borderColor: "#E8DDD4", color: "#4A3728" }}
-              title="Alternar perfil de usuária"
             >
               <UserCheck size={15} color="#8B6E52" />
-              <span>{profile.name || "Perfil"}</span>
+              <span className="max-w-[100px] truncate">{profile.name || "Perfil"}</span>
             </button>
           </div>
         </div>
 
-        {/* Scrollable Content View */}
-        <div className="flex-1 overflow-y-auto px-4 md:px-8 pt-6 pb-24 md:pb-8 scrollbar-thin">
+        {/* Main Content Area */}
+        <div className="flex-1 overflow-y-auto px-4 sm:px-6 md:px-8 pt-5 pb-24 lg:pb-8 scrollbar-thin">
           <div className="w-full max-w-5xl mx-auto">
             {activeTab === 0 && (
               <HomeTab userId={userId} onTabChange={setActiveTab} onLogout={handleLogout} />
@@ -154,13 +153,13 @@ export default function App() {
           </div>
         </div>
 
-        {/* Mobile Bottom Navigation (Hidden on Desktop) */}
-        <div className="md:hidden">
+        {/* Mobile / Tablet Bottom Navigation */}
+        <div className="lg:hidden">
           <BottomNav activeTab={activeTab} onTabChange={setActiveTab} />
         </div>
       </div>
 
-      {/* Google Sheets Config Modal */}
+      {/* Google Sheets Modal */}
       <GoogleSheetsModal isOpen={isSheetsModalOpen} onClose={() => setIsSheetsModalOpen(false)} />
     </div>
   );
